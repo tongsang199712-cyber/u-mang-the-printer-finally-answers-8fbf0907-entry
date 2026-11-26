@@ -19,6 +19,12 @@ function main(): void {
     throw new Error(`Line length ${LINE.length} is outside the 1-240 gate`);
   }
 
+  // Single-line gate: the entry must be exactly one line, so no
+  // newline (or carriage return) may hide inside it.
+  if (/[\n\r]/.test(LINE)) {
+    throw new Error("Line must be a single line with no line breaks");
+  }
+
   mkdirSync("/output", { recursive: true });
 
   // Write the line with no trailing newline.
